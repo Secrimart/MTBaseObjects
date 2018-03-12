@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'MTBaseObjects'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of MTBaseObjects.'
+  s.summary          = 'Define a set of foundational objects.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,17 +18,17 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+Define a set of foundational objects, that can be used build to a simple project.
                        DESC
 
-  s.homepage         = 'https://github.com/rstx_reg@aliyun.com/MTBaseObjects'
+  s.homepage         = 'https://github.com/Secrimart/MTBaseObjects'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'rstx_reg@aliyun.com' => 'rstx_reg@aliyun.com' }
-  s.source           = { :git => 'https://github.com/rstx_reg@aliyun.com/MTBaseObjects.git', :tag => s.version.to_s }
+  s.author           = { 'secrimart@aliyun.com' => 'secrimart@aliyun.com' }
+  s.source           = { :git => 'https://github.com/Secrimart/MTBaseObjects.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
 
   s.source_files = 'MTBaseObjects/Classes/**/*'
   
@@ -38,5 +38,11 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'AFNetworking', '~> 3.2'
+  s.dependency 'MBProgressHUD', '~> 1.1'
+  s.dependency 'Masonry', '~> 1.1'
+  s.dependency 'BackButtonHandler', '~> 1.0'
+
+  s.dependency 'JLFramework', '~> 0.1'
+
 end
