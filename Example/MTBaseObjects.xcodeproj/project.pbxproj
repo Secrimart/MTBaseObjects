@@ -66,7 +66,7 @@
 		BD6FD18FA2666036EEA93787 /* Pods-MTBaseObjects_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MTBaseObjects_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MTBaseObjects_Example/Pods-MTBaseObjects_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		E94DD2C81757635E06672298 /* Pods-MTBaseObjects_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MTBaseObjects_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MTBaseObjects_Tests/Pods-MTBaseObjects_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EF21A973582CB7A4C2FC0FB2 /* Pods-MTBaseObjects_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MTBaseObjects_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-MTBaseObjects_Example/Pods-MTBaseObjects_Example.release.xcconfig"; sourceTree = "<group>"; };
-		FA62DECEDCC866390DECD9C2 /* MTBaseObjects.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = MTBaseObjects.podspec; path = ../MTBaseObjects.podspec; sourceTree = "<group>"; };
+		FA62DECEDCC866390DECD9C2 /* MTBaseObjects.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = MTBaseObjects.podspec; path = ../MTBaseObjects.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
