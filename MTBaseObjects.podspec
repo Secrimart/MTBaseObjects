@@ -28,7 +28,7 @@ Define a set of foundational objects, that can be used build to a simple project
   s.source           = { :git => 'https://github.com/Secrimart/MTBaseObjects.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '8.0'
 
   s.source_files = 'MTBaseObjects/Classes/**/*'
   
