@@ -36,7 +36,10 @@
     // Do any additional setup after loading the view.
     
     [self.view addSubview:self.webView];
-    [self.view addSubview:self.progress];
+    if (self.navigationController &&
+        !self.navigationController.isNavigationBarHidden) {
+        [self.view addSubview:self.progress];
+    }
     
 }
 
@@ -55,15 +58,24 @@
 
 //MARK: - Layout
 - (void)setupLayoutConstraint {
-    
+    __weak typeof(self) weakSelf = self;
     [self.webView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(self.view);
+        make.edges.mas_equalTo(weakSelf.view);
     }];
+    if (self.navigationController &&
+        !self.navigationController.isNavigationBarHidden) {
+        [self.progress mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.mas_equalTo(weakSelf.view);
+            make.height.mas_equalTo(2);
+            if (self.navigationController.navigationBar.translucent) {
+                CGFloat height = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame) + CGRectGetHeight(weakSelf.navigationController.navigationBar.frame);
+                make.top.mas_equalTo(weakSelf.view).mas_offset(height);
+            } else {
+                make.top.mas_equalTo(weakSelf.view);
+            }
+        }];
+    }
     
-    [self.progress mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.left.bottom.right.mas_equalTo(self.view);
-        make.top.mas_equalTo(self.view).mas_offset(-20);
-    }];
 }
 
 //MARK: - Getter And Setter
