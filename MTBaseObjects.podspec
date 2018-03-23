@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MTBaseObjects'
-  s.version          = '0.1.1'
+  s.version          = '0.1.2'
   s.summary          = 'Define a set of foundational objects.'
 
 # This description is used to generate tags and improve search results.
@@ -42,6 +42,7 @@ Define a set of foundational objects, that can be used build to a simple project
   s.dependency 'MBProgressHUD', '~> 1.1'
   s.dependency 'Masonry', '~> 1.1'
   s.dependency 'BackButtonHandler', '~> 1.0'
+  s.dependency 'SDWebImage', '~> 4.3'
 
   s.dependency 'JLFramework', '~> 0.1'
 
