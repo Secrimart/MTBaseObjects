@@ -106,7 +106,7 @@
     }];
     
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(weakSelf.labelTitle.mas_bottom).mas_equalTo(weakSelf.controlInterval);
+        make.top.mas_equalTo(weakSelf.labelTitle.mas_bottom);
         make.bottom.mas_equalTo(weakSelf.contentInsets.bottom);
         make.left.mas_equalTo(weakSelf.contentInsets.left);
         make.right.mas_equalTo(weakSelf.contentInsets.right);
@@ -127,7 +127,7 @@
     }];
     
     [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.mas_equalTo(weakSelf.labelTitle.mas_top).mas_equalTo(-1 * weakSelf.controlInterval);
+        make.bottom.mas_equalTo(weakSelf.labelTitle.mas_top);
         make.top.mas_equalTo(weakSelf.contentInsets.top);
         make.left.mas_equalTo(weakSelf.contentInsets.left);
         make.right.mas_equalTo(weakSelf.contentInsets.right);
