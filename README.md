@@ -22,7 +22,7 @@ pod 'MTBaseObjects'
 
 ## Author
 
-secrimart@aliyun.com, rstx_reg@aliyun.com
+secrimart@aliyun.com
 
 ## License
 

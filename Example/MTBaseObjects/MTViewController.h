@@ -9,6 +9,6 @@
 @import UIKit;
 
 @import MTBaseObjects;
-@interface MTViewController : MTBaseViewController
+@interface MTViewController : MTWebViewController
 
 @end
