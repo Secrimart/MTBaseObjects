@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) MTButtonsView *viewFooter; // 清空历史
 
+@property (nonatomic, strong) MTLocalRecordVM *viewModel; // 视图模型 处理数据
+
 @end
 
 @implementation MTFinderViewController
@@ -40,13 +42,6 @@
 }
 
 //MARK: - Life Cycle
-- (void)initController {
-    self.viewModel = [[MTLocalRecordVM alloc] init];
-    self.recordVM.maxRecord = 20;
-    self.recordVM.recordKey = @"Finder";
-    
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -107,6 +102,15 @@
 }
 
 //MARK: - Getter And Setter
+- (MTLocalRecordVM *)viewModel {
+    if (_viewModel) return _viewModel;
+    _viewModel = [[MTLocalRecordVM alloc] init];
+    _viewModel.maxRecord = 20;
+    _viewModel.recordKey = @"Finder";
+    
+    return _viewModel;
+}
+
 - (MTLocalRecordVM *)recordVM {
     return (MTLocalRecordVM *)self.viewModel;
 }
