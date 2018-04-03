@@ -15,13 +15,6 @@
 #import "UIFont+mtBase.h"
 #import "UILabel+mtBase.h"
 
-@interface MTBaseCollectionViewCell ()
-@property (nonatomic, strong) UIImageView *imageView; // 图片视图
-
-@property (nonatomic, strong) UILabel *labelTitle; // 标题文本对象
-
-@end
-
 @implementation MTBaseCollectionViewCell
 
 - (void)initView {

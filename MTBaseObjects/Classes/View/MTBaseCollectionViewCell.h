@@ -16,6 +16,10 @@ typedef NS_ENUM(NSInteger, MTBaseCollCellTitleLayout) {
 
 @interface MTBaseCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic, strong) UIImageView *imageView; // 图片视图
+
+@property (nonatomic, strong) UILabel *labelTitle; // 标题文本对象
+
 @property (nonatomic, strong) NSString *title; // 标题
 
 @property (nonatomic) MTBaseCollCellTitleLayout layoutType; // 标题布局类型，Default 0
