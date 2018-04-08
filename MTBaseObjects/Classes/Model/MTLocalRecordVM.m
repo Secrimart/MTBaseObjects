@@ -10,6 +10,8 @@
 @implementation MTLocalRecordVM
 
 - (void)toReloadDataSourceBeforeRequest:(VoidBlock)before onFinished:(DataSourceStatusBlock)finished onFailed:(VoidBlock)failed {
+    if (before) before();
+    
     // 判定 本地存储标识 是否已经设置，配置 recordKey 之后才能进行数据加载
     if (self.recordKey.length == 0) {
         JDLogFuncStr(@"*** 本地存储标识 recordKey 不能为空");
@@ -23,7 +25,7 @@
     } else {
         self.dataSource = [NSMutableArray arrayWithCapacity:0];
     }
-    
+    if (finished) finished(DataSourceStatusNormal);
 }
 
 - (BOOL)isExistsRecord {

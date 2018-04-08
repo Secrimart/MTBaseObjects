@@ -24,7 +24,11 @@
 
 @implementation MTFinderViewController
 - (void)toShowFinderOnViewController:(UIViewController *)viewController {
-    [viewController presentViewController:self.navigationController animated:YES completion:nil];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:self];
+    [nav.navigationBar setShadowImage:[UIImage new]];
+    nav.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    [viewController presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)toStartSearchingOnBlock:(ToSearchingBlock)search {
@@ -33,7 +37,7 @@
 
 - (void)toDealSearchString:(NSString *)string {
     if (string.length > 0) {
-        [self.recordVM toAddRecord:string];
+        [self.viewModel toAddRecord:string];
         [self.fieldSearch endEditing:YES];
         
         [self dismissViewControllerAnimated:NO completion:nil];
@@ -41,9 +45,28 @@
     }
 }
 
+- (void)toReloadData {
+    __weak typeof(self) weakSelf = self;
+    [self.viewModel toReloadDataSourceBeforeRequest:nil onFinished:^(DataSourceStatus status) {
+        if (((NSArray *)weakSelf.viewModel.dataSource.firstObject).count > 0) {
+            [weakSelf.tableView setTableFooterView:self.viewFooter];
+        } else {
+            [weakSelf.tableView setTableFooterView:nil];
+        }
+        [weakSelf.tableView reloadData];
+    } onFailed:nil];
+}
+
+- (void)toClearAllRecord {
+    [self.viewModel toClearAllRecord];
+    [self toReloadData];
+}
+
 //MARK: - Life Cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.view.contentInsets = self.edgeInsets;
     
     [self.navigationItem setTitleView:self.fieldSearch];
     [self toSetupNavgationItem];
@@ -60,21 +83,7 @@
     self.fieldSearch.text = self.searchString;
     [self.fieldSearch becomeFirstResponder];
     
-    __weak typeof(self) weakSelf = self;
-    [self.recordVM toReloadDataSourceBeforeRequest:nil onFinished:^(DataSourceStatus status) {
-        if (weakSelf.recordVM.dataSource.count > 0) {
-            [weakSelf.tableView setTableFooterView:self.viewFooter];
-        } else {
-            [weakSelf.tableView setTableFooterView:nil];
-        }
-    } onFailed:nil];
-}
-
-- (void)setupLayoutConstraint {
-    __weak typeof(self) weakSelf = self;
-    [self.fieldSearch mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(weakSelf.fieldSearch.superview);
-    }];
+    [self toReloadData];
 }
 
 - (CGRect)rectFooterView {
@@ -83,12 +92,18 @@
     return rect;
 }
 
+- (CGRect)rectFieldSearch {
+    CGRect rect = self.view.bounds;
+    rect.size.height = self.rowHeight*0.7f;
+    return rect;
+}
+
 - (MTButtonsView *)viewFooter {
     if (_viewFooter) return _viewFooter;
     _viewFooter = [[MTButtonsView alloc] initWithFrame:[self rectFooterView]];
     _viewFooter.contentInsets = UIEdgeInsetsMake(self.rowHeight*.5f, self.edgeInsets.left*3.f, self.rowHeight*.7f, self.edgeInsets.right*3.f);
     
-    [_viewFooter toAddButtonWithTitle:@"清空历史" withTag:0 withStyle:ButtonStyleCustom target:[self recordVM] action:@selector(toClearAllRecord)];
+    [_viewFooter toAddButtonWithTitle:@"清空历史" withTag:0 withStyle:ButtonStyleCustom target:self action:@selector(toClearAllRecord)];
     
     UIButton *button = [_viewFooter buttonWithTag:0];
     [button setBackgroundColor:[UIColor whiteColor]];
@@ -111,29 +126,16 @@
     return _viewModel;
 }
 
-- (MTLocalRecordVM *)recordVM {
-    return (MTLocalRecordVM *)self.viewModel;
-}
-
-- (UINavigationController *)navigationController {
-    if (_navigationController) return _navigationController;
-    _navigationController = [[UINavigationController alloc] initWithRootViewController:self];
-    [_navigationController.navigationBar setShadowImage:[UIImage new]];
-    _navigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
-    return _navigationController;
-}
-
 - (MTTextField *)fieldSearch {
     if (_fieldSearch) return _fieldSearch;
-    _fieldSearch = [[MTTextField alloc] initWithFrame:CGRectZero];
+    _fieldSearch = [[MTTextField alloc] initWithFrame:[self rectFieldSearch]];
     _fieldSearch.font = [UIFont descFont];
     _fieldSearch.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.05f];
     _fieldSearch.placeholder = self.placeholder;
     
     _fieldSearch.layer.cornerRadius = self.cornerRadius;
     _fieldSearch.textColor = [UIColor dataColor];
-    [_fieldSearch setLeftImage:[[UIImage imageNamed:@"searchicon"] imageWithTintColor:[UIColor lightGrayColor]]];
+    [_fieldSearch setLeftImage:self.fieldSearchIcon];
     
     _fieldSearch.returnKeyType = UIReturnKeySearch;
     _fieldSearch.delegate = self;
@@ -143,7 +145,7 @@
 
 - (void)setFinderKey:(NSString *)finderKey {
     _finderKey = finderKey;
-    self.recordVM.recordKey = finderKey;
+    self.viewModel.recordKey = finderKey;
 }
 
 //MARK: - Action
@@ -151,6 +153,8 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(toDealCancelBatItem)];
     
     [rightItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont descFont],NSFontAttributeName,[UIColor grayDataColor],NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
+    
+    [rightItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont descFont],NSFontAttributeName,[UIColor grayDataColor],NSForegroundColorAttributeName, nil] forState:UIControlStateHighlighted];
     
     [self.navigationItem setRightBarButtonItem:rightItem];
 }
@@ -179,7 +183,7 @@
         cell.textLabel.font = [UIFont descFont];
     }
     
-    cell.textLabel.text = [[self recordVM] recordAtIndexPath:indexPath];
+    cell.textLabel.text = [self.viewModel recordAtIndexPath:indexPath];
     
     return cell;
 }

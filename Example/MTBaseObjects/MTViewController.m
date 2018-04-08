@@ -10,6 +10,8 @@
 
 @interface MTViewController ()
 
+@property (nonatomic, strong) MTFinderViewController *finderVC; // 搜索历史
+
 @end
 
 @implementation MTViewController
@@ -21,6 +23,13 @@
     self.view.backgroundColor = [UIColor redColor];
     self.webView.backgroundColor = [UIColor blueColor];
     
+    UIBarButtonItem *findItem = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStyleDone target:self action:@selector(toShowFinderViewController)];
+    [self.navigationItem setRightBarButtonItem:findItem];
+    
+}
+
+- (void)toShowFinderViewController {
+    [self.finderVC toShowFinderOnViewController:self];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,5 +42,12 @@
     [self toLoadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.apple.com"]]];
 }
 
+//MARK: - Getter And Setter
+- (MTFinderViewController *)finderVC {
+    if (_finderVC) return _finderVC;
+    _finderVC = [[MTFinderViewController alloc] initWithStyle:UITableViewStylePlain];
+    
+    return _finderVC;
+}
 
 @end
