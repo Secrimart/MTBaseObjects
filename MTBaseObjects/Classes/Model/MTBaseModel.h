@@ -20,7 +20,7 @@ extern NSString *const RequestErrorDescription;     // 请求异常描述
 typedef void(^BaseModelResponse)(NSString *code, NSString* msg, NSDictionary *data);
 
 @interface MTBaseModel : NSObject
-@property (nonatomic, strong) UIView *hudOnView; // HUD添加到给视图上
+@property (nonatomic, strong, nullable) UIView *hudOnView; // HUD添加到给视图上
 
 /**
  显示网络请求失败或异常提示信息

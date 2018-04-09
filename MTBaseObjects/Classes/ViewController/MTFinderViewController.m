@@ -108,6 +108,7 @@
     UIButton *button = [_viewFooter buttonWithTag:0];
     [button setBackgroundColor:[UIColor whiteColor]];
     [button setTintColor:[UIColor grayDataColor]];
+    [button.titleLabel setFont:[UIFont contentFont]];
     
     button.layer.cornerRadius = self.cornerRadius;
     button.layer.borderColor = [UIColor grayDataColor].CGColor;
@@ -135,6 +136,7 @@
     
     _fieldSearch.layer.cornerRadius = self.cornerRadius;
     _fieldSearch.textColor = [UIColor dataColor];
+    _fieldSearch.tintColor = [UIColor grayDataColor];
     [_fieldSearch setLeftImage:self.fieldSearchIcon];
     
     _fieldSearch.returnKeyType = UIReturnKeySearch;
