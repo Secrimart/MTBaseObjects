@@ -25,6 +25,9 @@
     
     UIBarButtonItem *findItem = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStyleDone target:self action:@selector(toShowFinderViewController)];
     [self.navigationItem setRightBarButtonItem:findItem];
+    [[MTBlankView sharedManager] setImageBlank:[UIImage imageNamed:@"blankView"]];
+    
+    [MTBlankView blankViewAddTo:self.view message:@"暂时没有内容"];
     
 }
 
@@ -39,7 +42,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self toLoadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.apple.com"]]];
+//    [self toLoadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.apple.com"]]];
+    
 }
 
 //MARK: - Getter And Setter

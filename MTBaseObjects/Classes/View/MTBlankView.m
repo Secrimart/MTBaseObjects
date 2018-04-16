@@ -8,12 +8,7 @@
 #import "MTBlankView.h"
 
 @interface MTBlankView ()
-
-@property (nonatomic, strong) UIImageView *imageView; // 没有数据的图片
-
-@property (nonatomic, strong) UILabel *labelMessage; // 没有数据的描述
-
-@property (nonatomic, strong) UIButton *buttonGoOn; // 继续业务处理的按钮
+@property (nonatomic) CGFloat yOffset; // y轴偏移量
 
 @end
 
@@ -30,21 +25,22 @@
 }
 
 + (void)blankViewAddTo:(UIView *)view message:(NSString *)message {
-    return [[MTBlankView sharedManager] blankViewAddTo:view message:message contentOffSet:UIEdgeInsetsZero];
+    return [[MTBlankView sharedManager] blankViewAddTo:view message:message yOffset:0];
 }
 
-+ (void)blankViewAddTo:(UIView *)view message:(NSString *)message contentOffSet:(UIEdgeInsets)insets {
-    return [[MTBlankView sharedManager] blankViewAddTo:view message:message contentOffSet:insets];
++ (void)blankViewAddTo:(UIView *)view message:(NSString *)message yOffset:(CGFloat)offset; {
+    return [[MTBlankView sharedManager] blankViewAddTo:view message:message yOffset:offset];
 }
 
 + (void)blankViewHidden:(UIView *)view {
     return [[MTBlankView sharedManager] blankViewHidden:view];
 }
 
-- (void)blankViewAddTo:(UIView *)view message:(NSString *)message contentOffSet:(UIEdgeInsets)insets {
+
+- (void)blankViewAddTo:(UIView *)view message:(NSString *)message yOffset:(CGFloat)offset; {
     [self setFrame:view.bounds];
     self.message = message;
-    self.contentInsets = insets;
+    self.yOffset = offset;
     
     if (self.isShowed) [self removeFromSuperview];
     [view addSubview:self];
@@ -81,15 +77,15 @@
     CGSize size = self.imageBlank.size;
     [self.imageView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.centerX.mas_equalTo(weakSelf);
-        make.top.mas_equalTo(weakSelf.contentInsets.top);
-        make.size.mas_equalTo(size.height);
+        make.centerY.mas_equalTo(weakSelf.mas_centerY).mas_offset(weakSelf.yOffset);
+        make.size.mas_equalTo(size);
     }];
     
     CGSize sizeLabel = [self.labelMessage.text sizeByFont:self.labelMessage.font boundSize:self.contentSize lineBreakMode:NSLineBreakByWordWrapping];
     
     [self.labelMessage mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(weakSelf.contentInsets.left);
-        make.right.mas_equalTo(weakSelf.contentInsets.right);
+        make.right.mas_equalTo(-weakSelf.contentInsets.right);
         make.top.mas_equalTo(weakSelf.imageView.mas_bottom).mas_offset(weakSelf.controlInterval);
         make.height.mas_equalTo(sizeLabel.height);
         
