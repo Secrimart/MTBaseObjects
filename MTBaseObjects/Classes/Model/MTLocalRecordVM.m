@@ -14,7 +14,7 @@
     
     // 判定 本地存储标识 是否已经设置，配置 recordKey 之后才能进行数据加载
     if (self.recordKey.length == 0) {
-        JDLogFuncStr(@"*** 本地存储标识 recordKey 不能为空");
+        MDLogFuncStr(@"*** 本地存储标识 recordKey 不能为空");
         if (failed) failed();
         return;
     }
@@ -49,7 +49,7 @@
 - (void)toAddRecord:(NSString *)record {
     // 本地存储堆栈深度 maxRecord 不能为 0
     if (self.maxRecord == 0) {
-        JDLogFuncStr(@"*** 本地存储堆栈深度 maxRecord 不能为 0");
+        MDLogFuncStr(@"*** 本地存储堆栈深度 maxRecord 不能为 0");
         return;
     }
     

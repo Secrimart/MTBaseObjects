@@ -125,11 +125,11 @@ NSString *const RequestErrorDescription = @"网络异常\n请检查网络或稍�
 - (void)postSuccess:(void (^)(id responseObject))success
             failure:(void (^)(NSError *error))failure
             showHUD:(BOOL)show {
-    JDLog(@"*** Service %@ Request parameters is %@",self.serviceName,self.params);
+    MDLog(@"*** Service %@ Request parameters is %@",self.serviceName,self.params);
     if (self.hudOnView && show) [MBProgressHUD showHUDAddedTo:self.hudOnView animated:YES];
     __weak typeof(self) weakSelf = self;
     [self.session POST:self.serviceName parameters:self.params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        JDLog(@"*** Service %@ Response object is %@",self.serviceName,responseObject);
+        MDLog(@"*** Service %@ Response object is %@",self.serviceName,responseObject);
         
         if (success) {
             success(responseObject);
@@ -162,11 +162,11 @@ NSString *const RequestErrorDescription = @"网络异常\n请检查网络或稍�
 - (void)getSuccess:(void (^)(id _Nonnull))success
            failure:(void (^)(NSError * _Nonnull))failure
            showHUD:(BOOL)show {
-    JDLog(@"*** Service %@ Request parameters is %@",self.serviceName,self.params);
+    MDLog(@"*** Service %@ Request parameters is %@",self.serviceName,self.params);
     if (self.hudOnView && show) [MBProgressHUD showHUDAddedTo:self.hudOnView animated:YES];
     __weak typeof(self) weakSelf = self;
     [self.session GET:self.serviceName parameters:self.params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        JDLog(@"*** Service %@ Response object is %@",self.serviceName,responseObject);
+        MDLog(@"*** Service %@ Response object is %@",self.serviceName,responseObject);
         
         if (success) {
             success(responseObject);
@@ -197,8 +197,8 @@ NSString *const RequestErrorDescription = @"网络异常\n请检查网络或稍�
            success:(void (^)(id _Nonnull))success
            failure:(void (^)(NSError * _Nonnull))failure
            showHUD:(BOOL)show {
-    JDLog(@"*** Upload File is %@",file.fileName);
-    JDLog(@"*** Request parameters is %@",self.params);
+    MDLog(@"*** Upload File is %@",file.fileName);
+    MDLog(@"*** Request parameters is %@",self.params);
     if (self.hudOnView && show) [MBProgressHUD showHUDAddedTo:self.hudOnView animated:YES];
     __weak typeof(self) weakSelf = self;
     [self.session POST:self.serviceName parameters:self.params constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
@@ -207,7 +207,7 @@ NSString *const RequestErrorDescription = @"网络异常\n请检查网络或稍�
                                 fileName:file.fileName
                                 mimeType:file.fileType];
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        JDLog(@"*** Upload File %@ Response object is %@",file.fileName,responseObject);
+        MDLog(@"*** Upload File %@ Response object is %@",file.fileName,responseObject);
         
         if (success) {
             success(responseObject);

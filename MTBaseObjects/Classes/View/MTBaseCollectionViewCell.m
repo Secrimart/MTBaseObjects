@@ -7,7 +7,7 @@
 
 #import "MTBaseCollectionViewCell.h"
 
-@import JLFramework;
+@import MTFramework;
 @import SDWebImage;
 @import Masonry;
 

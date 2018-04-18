@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "MTUploadFile.h"
 
-@import JLFramework;
+@import MTFramework;
 @import AFNetworking;
 @import MBProgressHUD;
 

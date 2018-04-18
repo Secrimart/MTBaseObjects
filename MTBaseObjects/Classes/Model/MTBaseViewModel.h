@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "MTBaseVMProtocol.h"
 
-@import JLFramework;
+@import MTFramework;
 
 @interface MTBaseViewModel : NSObject<MTBaseVMProtocol>
 @property (nonatomic) NSInteger page; // 分页查询时记录当前页数

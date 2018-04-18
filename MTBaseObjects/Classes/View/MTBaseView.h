@@ -11,7 +11,7 @@
 #import "UIColor+mtBase.h"
 #import "UILabel+mtBase.h"
 
-@import JLFramework;
+@import MTFramework;
 @import Masonry;
 
 @interface MTBaseView : UIView
