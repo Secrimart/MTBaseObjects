@@ -32,7 +32,10 @@
 }
 
 - (void)toShowFinderViewController {
-    [self.finderVC toShowFinderOnViewController:self];
+//    [self.finderVC toShowFinderOnViewController:self];
+    MTWebViewController *web = [[MTWebViewController alloc] init];
+    [web toLoadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.apple.com"]]];
+    [self.navigationController pushViewController:web animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

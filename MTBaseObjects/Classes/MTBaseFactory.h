@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+@import MTFramework;
+
 @protocol MTBaseFactoryDataSource<NSObject>
 
 @required
