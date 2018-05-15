@@ -58,7 +58,7 @@
 }
 
 - (BOOL)isShowed {
-    return self.superview;
+    return self.superview?YES:NO;
 }
 
 //MARK: - Life Cycle
