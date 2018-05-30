@@ -67,4 +67,22 @@
     return [UIFont systemFontOfSize:14.f];
 }
 
+- (NSString *)networkProtocol {
+    if (_networkProtocol) {
+        return _networkProtocol;
+    }
+#ifdef HTTPS
+    return @"https://";
+#else
+    return @"http://";
+#endif
+}
+
+- (NSString *)baseURL {
+    if (_baseURL) {
+        return _baseURL;
+    }
+    return @"";
+}
+
 @end

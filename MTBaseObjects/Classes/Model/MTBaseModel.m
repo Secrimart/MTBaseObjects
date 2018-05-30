@@ -6,6 +6,7 @@
 //
 
 #import "MTBaseModel.h"
+#import "MTBaseFactory.h"
 
 NSTimeInterval const HUDHideDelayInterval = 2.f;
 
@@ -35,18 +36,14 @@ NSString *const RequestErrorDescription = @"网络异常\n请检查网络或稍�
     if (_networkProtocol) {
         return _networkProtocol;
     }
-#ifdef HTTPS
-    return @"https://";
-#else
-    return @"http://";
-#endif
+    return [MTBaseFactory sharedInstance].networkProtocol;
 }
 
 - (NSString *)baseURL {
     if (_baseURL) {
         return _baseURL;
     }
-    return @"";
+    return [MTBaseFactory sharedInstance].baseURL;
 }
 
 - (void)setServiceName:(NSString *)serviceName {

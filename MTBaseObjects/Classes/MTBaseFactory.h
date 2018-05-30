@@ -38,6 +38,10 @@
 
 @property (nonatomic, weak) id <MTBaseFactoryDataSource> dataSource; // 工厂数据源
 
+@property (nonatomic, strong) NSString *networkProtocol; // 网络访问协议 HTTP or HTTPS
+
+@property (nonatomic, strong) NSString *baseURL; // 服务域名
+
 //MARK: - UIColor for Project
 - (UIColor *)spotColor;
 
