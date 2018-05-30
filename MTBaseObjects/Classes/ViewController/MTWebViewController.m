@@ -141,23 +141,6 @@
     }
 }
 
-//MARK: - WKNavigationDelegate
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    if (!navigationAction.targetFrame.isMainFrame &&
-        [navigationAction.request.URL.relativeString containsString:@"http"]) {
-        if (self.navigationController) {
-            MTWebViewController *webVC = [[MTWebViewController alloc] init];
-            webVC.title = self.title;
-            [webVC toLoadRequest:navigationAction.request];
-            [self.navigationController pushViewController:webVC animated:YES];
-        } else {
-            [webView evaluateJavaScript:@"var a = document.getElementsByTagName('a');for(var i=0;i<a.length;i++){a[i].setAttribute('target','');}" completionHandler:nil];
-        }
-        
-    }
-    decisionHandler(WKNavigationActionPolicyAllow);
-}
-
 // 处理自签名 SSL
 - (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler {
     if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
@@ -168,6 +151,27 @@
 }
 
 //MARK: - WKUIDelegate
+- (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures {
+    /**
+     * 针对a标签 taget='_blank' 无效的问题
+     * 判断target标签中内容为_blank时，主动加载navigationAction.request
+     **/
+    if (!navigationAction.targetFrame.isMainFrame) {
+        NSString *fullRequest = navigationAction.request.URL.absoluteString;
+        NSString *scriptString = [NSString stringWithFormat:@"%@%@%@", @"document.querySelectorAll(\"[href='", fullRequest, @"']\")[0].getAttribute('target');"];
+        
+        [webView evaluateJavaScript:scriptString completionHandler:^(id _Nullable targetAttr, NSError * _Nullable error) {
+            if (!error) {
+                if ([((NSString *)targetAttr).lowercaseString isEqualToString:@"_blank"]) {
+                    [webView loadRequest:navigationAction.request];
+                }
+            }
+        }];
+    }
+    
+    return nil;
+}
+
 - (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
     
     [self showAlertNote:message];
